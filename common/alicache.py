@@ -19,7 +19,10 @@ class AliOCSCache(BaseCache):
         else:
             self._backend = cache.Cache()
     def _keytr(self, key, version):
-        return self.make_key(key, version = version)
+        newkey = str(self.make_key(key, version = version))
+        self.validate_key(newkey)
+        return newkey
+
     def add(self, key, value, timeout=DEFAULT_TIMEOUT, version=None):
         self._backend.add(self._keytr(key, version), value, timeout)
 
